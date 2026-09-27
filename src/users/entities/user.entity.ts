@@ -20,8 +20,8 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
-  password: string;
+ @Column({ select: false })
+password: string;
 
   @OneToMany(() => Poll, (poll) => poll.creator)
   polls: Relation<Poll>[];

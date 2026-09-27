@@ -25,8 +25,7 @@ export class PollsController {
   async create(
     @Body() createPollDto: CreatePollDto,
   ) {
-    // Pour le moment, on utilise l'utilisateur avec l'id 1.
-    // L'authentification sera ajoutée plus tard.
+  
     const user = await this.usersService.findOne(1);
 
     return this.pollsService.create(
@@ -39,6 +38,11 @@ export class PollsController {
   findAll() {
     return this.pollsService.findAll();
   }
+
+  @Get(':id/results')
+getResults(@Param('id', ParseIntPipe) id: number) {
+  return this.pollsService.getResults(id);
+}
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
