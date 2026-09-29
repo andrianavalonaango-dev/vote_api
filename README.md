@@ -480,6 +480,3 @@ GitHub :
 
 https://github.com/andrianavalonaango-dev/vote_api
 
-## Auteur
-
-Projet réalisé dans le cadre d'un projet académique de développement d'une API REST de gestion de sondages.
