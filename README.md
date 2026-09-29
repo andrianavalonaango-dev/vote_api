@@ -1,114 +1,485 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Vote API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST de gestion de sondages développée avec **NestJS**, **TypeScript**, **TypeORM** et **MySQL**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+L'application permet de créer des sondages avec plusieurs options, de gérer les utilisateurs et les votes, d'empêcher un utilisateur de voter plusieurs fois pour le même sondage et de fermer automatiquement les sondages lorsque leur date d'expiration est atteinte.
 
-## Description
+## Technologies utilisées
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Node.js**
+- **NestJS**
+- **TypeScript**
+- **TypeORM**
+- **MySQL**
+- **class-validator**
+- **@nestjs/schedule**
+- **REST API**
+- **curl** pour les tests
 
-## Project setup
+## Fonctionnalités
 
-```bash
-$ npm install
+- Gestion des utilisateurs
+- Création et gestion des sondages
+- Ajout de plusieurs options à un sondage
+- Vote des utilisateurs
+- Un seul vote par utilisateur et par sondage
+- Affichage des résultats et des pourcentages
+- Fermeture automatique des sondages à leur date d'expiration
+- Validation des données envoyées à l'API
+- Suppression des sondages et des options
+
+## Structure du projet
+
+```text
+vote_api/
+├── src/
+│   ├── users/
+│   │   ├── dto/
+│   │   ├── entities/
+│   │   ├── users.controller.ts
+│   │   ├── users.service.ts
+│   │   └── users.module.ts
+│   │
+│   ├── polls/
+│   │   ├── dto/
+│   │   ├── entities/
+│   │   ├── polls.controller.ts
+│   │   ├── polls.service.ts
+│   │   └── polls.module.ts
+│   │
+│   ├── options/
+│   │   ├── dto/
+│   │   ├── entities/
+│   │   ├── options.controller.ts
+│   │   ├── options.service.ts
+│   │   └── options.module.ts
+│   │
+│   ├── votes/
+│   │   ├── dto/
+│   │   ├── entities/
+│   │   ├── votes.controller.ts
+│   │   ├── votes.service.ts
+│   │   └── votes.module.ts
+│   │
+│   ├── app.module.ts
+│   └── main.ts
+│
+├── .env
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
-## Compile and run the project
+## Prérequis
+
+Avant d'installer le projet, il faut avoir installé :
+
+- Node.js
+- npm
+- MySQL
+- Git
+
+Vérifier les versions :
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+node --version
+npm --version
+mysql --version
+git --version
 ```
 
-## Run tests
+## Installation
+
+### 1. Cloner le projet
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/andrianavalonaango-dev/vote_api.git
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Entrer dans le projet :
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+cd vote_api
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 2. Installer les dépendances
 
-## Observability
+```bash
+npm install
+```
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+## Configuration de la base de données
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+Le projet utilise **MySQL**.
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+Créer la base de données :
 
-## Resources
+```sql
+CREATE DATABASE vote_db;
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+Créer l'utilisateur MySQL utilisé par l'application :
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observer](https://observer.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```sql
+CREATE USER 'vote_user'@'localhost' IDENTIFIED BY 'vote_password';
+```
 
-## Support
+Donner les droits :
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```sql
+GRANT ALL PRIVILEGES ON vote_db.* TO 'vote_user'@'localhost';
+```
 
-## Stay in touch
+Puis :
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```sql
+FLUSH PRIVILEGES;
+```
 
-## License
+## Configuration des variables d'environnement
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Créer un fichier `.env` à la racine du projet :
+
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=vote_user
+DB_PASSWORD=vote_password
+DB_DATABASE=vote_db
+PORT=3000
+```
+
+> Le fichier `.env` contient des informations sensibles et ne doit pas être envoyé sur GitHub.
+
+## Lancement du projet
+
+### Mode développement
+
+```bash
+npm run start:dev
+```
+
+L'API sera disponible à :
+
+```text
+http://localhost:3000
+```
+
+### Mode normal
+
+```bash
+npm run start
+```
+
+### Compiler le projet
+
+```bash
+npm run build
+```
+
+### Lancer la version compilée
+
+```bash
+npm run start:prod
+```
+
+## API
+
+### Utilisateurs
+
+Créer un utilisateur :
+
+```http
+POST /users
+```
+
+Récupérer tous les utilisateurs :
+
+```http
+GET /users
+```
+
+Récupérer un utilisateur :
+
+```http
+GET /users/:id
+```
+
+Supprimer un utilisateur :
+
+```http
+DELETE /users/:id
+```
+
+### Sondages
+
+Créer un sondage :
+
+```http
+POST /polls
+```
+
+Récupérer tous les sondages :
+
+```http
+GET /polls
+```
+
+Récupérer un sondage :
+
+```http
+GET /polls/:id
+```
+
+Modifier un sondage :
+
+```http
+PATCH /polls/:id
+```
+
+Supprimer un sondage :
+
+```http
+DELETE /polls/:id
+```
+
+Récupérer les résultats :
+
+```http
+GET /polls/:id/results
+```
+
+### Options
+
+Ajouter une option à un sondage :
+
+```http
+POST /polls/:pollId/options
+```
+
+Récupérer les options d'un sondage :
+
+```http
+GET /polls/:pollId/options
+```
+
+Récupérer toutes les options :
+
+```http
+GET /options
+```
+
+Récupérer une option :
+
+```http
+GET /options/:id
+```
+
+Supprimer une option :
+
+```http
+DELETE /options/:id
+```
+
+### Votes
+
+Voter dans un sondage :
+
+```http
+POST /polls/:pollId/vote
+```
+
+Récupérer les votes d'un sondage :
+
+```http
+GET /polls/:pollId/votes
+```
+
+Récupérer tous les votes :
+
+```http
+GET /votes
+```
+
+Récupérer un vote :
+
+```http
+GET /votes/:id
+```
+
+## Exemple de création d'un utilisateur
+
+```bash
+curl -X POST http://localhost:3000/users \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Ango",
+  "email": "ango@gmail.com",
+  "password": "password123"
+}'
+```
+
+## Exemple de création d'un sondage
+
+Le sondage peut être configuré pour expirer dans 5 minutes :
+
+```bash
+curl -X POST http://localhost:3000/polls \
+-H "Content-Type: application/json" \
+-d "{
+  \"title\": \"Quel langage de programmation préférez-vous ?\",
+  \"description\": \"Choisissez votre langage de programmation préféré.\",
+  \"expiresAt\": \"$(date -u -d '+5 minutes' '+%Y-%m-%dT%H:%M:%SZ')\"
+}"
+```
+
+## Ajouter une option
+
+Exemple :
+
+```bash
+curl -X POST http://localhost:3000/polls/1/options \
+-H "Content-Type: application/json" \
+-d '{
+  "text": "JavaScript"
+}'
+```
+
+Autres exemples :
+
+```bash
+curl -X POST http://localhost:3000/polls/1/options \
+-H "Content-Type: application/json" \
+-d '{
+  "text": "Python"
+}'
+```
+
+```bash
+curl -X POST http://localhost:3000/polls/1/options \
+-H "Content-Type: application/json" \
+-d '{
+  "text": "PHP"
+}'
+```
+
+## Voter
+
+Exemple :
+
+```bash
+curl -X POST http://localhost:3000/polls/1/vote \
+-H "Content-Type: application/json" \
+-d '{
+  "userId": 1,
+  "optionId": 1
+}'
+```
+
+Un utilisateur ne peut voter qu'une seule fois pour le même sondage.
+
+## Consulter les résultats
+
+```bash
+curl http://localhost:3000/polls/1/results
+```
+
+Exemple de résultat :
+
+```json
+{
+  "pollId": 1,
+  "title": "Quel langage de programmation préférez-vous ?",
+  "totalVotes": 2,
+  "results": [
+    {
+      "optionId": 1,
+      "text": "JavaScript",
+      "votes": 1,
+      "percentage": 50
+    },
+    {
+      "optionId": 2,
+      "text": "Python",
+      "votes": 1,
+      "percentage": 50
+    }
+  ]
+}
+```
+
+## Fermeture automatique des sondages
+
+Les sondages possèdent une date d'expiration définie avec `expiresAt`.
+
+Un système de tâche planifiée vérifie automatiquement les sondages chaque minute.
+
+Lorsqu'un sondage atteint sa date d'expiration :
+
+```text
+status = "active"
+```
+
+devient :
+
+```text
+status = "closed"
+```
+
+Le système permet donc de fermer automatiquement les sondages sans intervention manuelle.
+
+## Tests
+
+Lancer les tests unitaires :
+
+```bash
+npm run test
+```
+
+Lancer les tests end-to-end :
+
+```bash
+npm run test:e2e
+```
+
+Afficher la couverture des tests :
+
+```bash
+npm run test:cov
+```
+
+## Build
+
+Pour vérifier que le projet peut être compilé :
+
+```bash
+npm run build
+```
+
+Si la compilation réussit, le dossier `dist/` est généré.
+
+## Git
+
+Pour récupérer la dernière version du projet :
+
+```bash
+git pull origin main
+```
+
+Pour envoyer des modifications :
+
+```bash
+git add .
+git commit -m "description des modifications"
+git push origin main
+```
+
+## Repository
+
+GitHub :
+
+https://github.com/andrianavalonaango-dev/vote_api
+
+## Auteur
+
+Projet réalisé dans le cadre d'un projet académique de développement d'une API REST de gestion de sondages.
